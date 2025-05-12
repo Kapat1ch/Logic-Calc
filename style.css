@@ -1,0 +1,216 @@
+/* style.css - Стиль "SPA Price List" */
+
+:root {
+    --bs-body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #212529;
+    --bs-border-color: #e9ecef; /* Светлее граница для линий */
+    --table-header-bg: #212529; /* Темный фон заголовка таблицы */
+    --table-header-color: #ffffff; /* Белый текст заголовка таблицы */
+    --text-muted: #6c757d;
+    --bs-border-radius: 0.25rem; /* Чуть острее углы */
+    --link-color: #212529;
+    --link-hover-color: #0d6efd; /* Синий при наведении */
+}
+
+body {
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    font-family: var(--bs-body-font-family);
+    font-size: 1rem; /* Стандартный размер */
+}
+
+.container {
+    max-width: 960px;
+}
+
+/* Верхняя навигация (имитация) */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+.app-logo {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+.app-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    transition: color 0.2s ease;
+}
+.app-nav a:hover,
+.app-nav a.active {
+    color: var(--link-hover-color);
+    /* text-decoration: underline; */ /* Можно добавить подчеркивание при наведении */
+}
+.login-button {
+     font-size: 0.9rem;
+}
+
+
+/* Основной заголовок страницы */
+h1 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 1.75rem; /* Чуть меньше, как "ЦЕНЫ" */
+    font-weight: 500;
+    color: var(--bs-body-color);
+    text-transform: uppercase; /* Как в примере */
+    letter-spacing: 0.05em; /* Небольшой разряд */
+}
+
+/* Заголовки секций (Справка) */
+h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-top: 3rem; /* Больше отступа между секциями */
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--bs-border-color); /* Подчеркивание линией */
+}
+
+
+/* Блок управления */
+.controls-section {
+    margin-bottom: 2.5rem;
+    /* Без рамки и фона */
+}
+
+/* Поле ввода */
+#expression {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    border: 1px solid #ced4da; /* Стандартная граница Bootstrap */
+    border-radius: var(--bs-border-radius);
+    padding: 0.5rem 0.75rem;
+}
+#expression:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Кнопки операторов */
+.operator-buttons button {
+    min-width: 40px;
+    margin: 2px; /* Чуть меньше отступ */
+    font-weight: normal;
+    border-radius: var(--bs-border-radius);
+    /* Простые кнопки */
+}
+
+/* Основная кнопка генерации */
+.generate-button {
+     border-radius: var(--bs-border-radius);
+     font-weight: 500;
+     padding: 0.5rem 1.25rem;
+}
+
+/* Контейнер для таблицы */
+#tableContainer {
+    margin-top: 1.5rem; /* Отступ над таблицей */
+     border: none; /* Убираем рамку контейнера */
+}
+
+/* Стили для основной таблицы истинности */
+#truthTable {
+    width: 100%; /* На всю ширину контейнера */
+    font-size: 0.95rem;
+    border-collapse: collapse; /* Убираем двойные линии */
+     border: none; /* Нет внешней рамки у таблицы */
+     margin-bottom: 0; /* Нет отступа снизу */
+}
+
+#truthTable th,
+#truthTable td {
+    text-align: center; /* Центрируем все в таблице истинности */
+    vertical-align: middle;
+    padding: 0.75rem 0.5rem; /* Больше вертикальный, меньше горизонтальный паддинг */
+    border: none; /* Убираем все границы по умолчанию */
+    border-bottom: 1px solid var(--bs-border-color); /* Только нижняя граница */
+}
+
+#truthTable thead th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-color);
+    font-weight: 600;
+    border-bottom: none; /* Убираем нижнюю границу у заголовка, т.к. у td уже есть */
+}
+
+/* Убираем границу у последней строки */
+#truthTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Убираем выделение финального столбца */
+#truthTable th.final-column,
+#truthTable td.final-column {
+    background-color: inherit;
+    font-weight: normal; /* Обычная жирность */
+}
+
+/* Убираем caption */
+#truthTable caption {
+    display: none;
+}
+
+/* Блок справки */
+#operatorHelp {
+    margin-top: 3rem; /* Отступ перед секцией справки */
+    padding: 0; /* Без внутренних отступов у блока */
+    border: none; /* Без рамки */
+}
+
+/* Стили для таблицы в справке - аналогично основной */
+#operatorHelpTable {
+     width: 100%;
+     font-size: 0.9rem;
+     border-collapse: collapse;
+     border: none;
+     margin-top: 1.5rem; /* Отступ от H2 */
+}
+
+#operatorHelpTable th,
+#operatorHelpTable td {
+    text-align: left; /* Текст слева в справке */
+    vertical-align: top; /* Выравнивание по верху */
+    padding: 0.75rem; /* Стандартный паддинг */
+    border: none;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+#operatorHelpTable thead th {
+     background-color: var(--table-header-bg);
+     color: var(--table-header-color);
+     font-weight: 600;
+     border-bottom: none;
+}
+#operatorHelpTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#operatorHelpTable code {
+    background-color: #f8f9fa;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+    color: #d63384; /* Стандартный цвет кода */
+}
+
+/* Контейнер с ошибками */
+#errorContainer .alert {
+    border-radius: var(--bs-border-radius);
+    margin-top: 1.5rem;
+}
+
+/* Убираем hover */
+.table-hover tbody tr:hover {
+    background-color: transparent !important;
+    color: inherit !important;
+}

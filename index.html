@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор таблицы истинности</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Шапка УДАЛЕНА -->
+
+        <h1 class="text-center">Генератор таблицы истинности</h1> <!-- Центрируем H1 -->
+
+        <!-- Блок управления -->
+        <div class="controls-section mb-4">
+            <div class="mb-3">
+                <label for="expression" class="form-label visually-hidden">Логическое выражение:</label>
+                <input type="text" id="expression" name="expression" class="form-control"
+                    placeholder="Введите логическое выражение (напр., a & (b || ¬c))">
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                <div class="operator-buttons mb-2 mb-md-0 me-md-3">
+                    <!-- Кнопки операторов -->
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('(')">(</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol(')')">)</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('¬')">¬</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('&')">&</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('||')">||</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('→')">→</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('↔')">↔</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="insertSymbol('^')">^</button>
+                </div>
+                <!-- Кнопка генерации -->
+                <button class="btn btn-primary generate-button" onclick="generateTable()">Сгенерировать</button>
+            </div>
+        </div>
+        <!-- Конец блока управления -->
+
+        <!-- Контейнер для вывода ошибок -->
+        <div id="errorContainer" role="alert"></div>
+
+        <!-- Контейнер для таблицы -->
+        <div id="tableContainer">
+            <!-- Здесь будет таблица -->
+        </div>
+
+        <!-- Справочный блок -->
+        <section id="operatorHelp" class="mt-5"> <!-- Добавляем отступ сверху -->
+            <h2>Справка по операторам</h2>
+            <div class="table-responsive">
+                <!-- Стандартная таблица Bootstrap для справки -->
+                <table class="table table-bordered table-sm" id="operatorHelpTable">
+                    <thead>
+                        <tr>
+                            <th>Символ</th>
+                            <th>Название</th>
+                            <th>Описание</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>¬</code></td>
+                            <td>Отрицание (НЕ)</td>
+                            <td>Инвертирует значение операнда (0 становится 1, 1 становится 0).</td>
+                        </tr>
+                        <tr>
+                            <td><code>&</code></td>
+                            <td>Конъюнкция (И)</td>
+                            <td>Истинно (1), если оба операнда истинны (1).</td>
+                        </tr>
+                        <tr>
+                            <td><code>||</code></td>
+                            <td>Дизъюнкция (ИЛИ)</td>
+                            <td>Истинно (1), если хотя бы один из операндов истинен (1).</td>
+                        </tr>
+                        <tr>
+                            <td><code>→</code></td>
+                            <td>Импликация (ЕСЛИ ... ТО)</td>
+                            <td>Ложно (0) только тогда, когда первый операнд истинен (1), а второй ложен (0). Во всех
+                                остальных случаях истинно (1). Эквивалентно <code>¬a || b</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>↔</code></td>
+                            <td>Эквиваленция (ТОГДА И ТОЛЬКО ТОГДА)</td>
+                            <td>Истинно (1), если оба операнда имеют одинаковое значение (оба 0 или оба 1).</td>
+                        </tr>
+                        <tr>
+                            <td><code>^</code></td>
+                            <td>Исключающее ИЛИ (XOR)</td>
+                            <td>Истинно (1), если операнды имеют разные значения (один 0, другой 1).</td>
+                        </tr>
+                        <tr>
+                            <td><code>( )</code></td>
+                            <td>Скобки</td>
+                            <td>Используются для изменения порядка выполнения операций (операции в скобках выполняются
+                                первыми).</td>
+                        </tr>
+                        <tr>
+                            <td><code>a, b, c...</code></td>
+                            <td>Переменные</td>
+                            <td>Логические переменные, могут принимать значения 0 (ложь) или 1 (истина). Используйте
+                                одиночные строчные латинские буквы.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Конец справочного блока -->
+
+    </div> <!-- Конец .container -->
+
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script>
+        function insertSymbol(symbol) {
+            const input = document.getElementById('expression');
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const text = input.value;
+            input.value = text.substring(0, start) + symbol + text.substring(end);
+            input.focus();
+            input.setSelectionRange(start + symbol.length, start + symbol.length);
+        }
+    </script>
+</body>
+
+</html>
